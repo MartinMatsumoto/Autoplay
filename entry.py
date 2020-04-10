@@ -3,6 +3,7 @@
 
 from window.window_shoot import WindowCapture
 from blood.blood_detect import BloodDetect
+from panel.panel import Panel
 import os, time
 
 sleep_time = 1
@@ -10,6 +11,7 @@ loop = True
 
 window_capture = WindowCapture("钉钉")
 blood_detect = BloodDetect()
+panel = Panel()
 
 while loop:
     #获取软件图片
