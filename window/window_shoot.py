@@ -16,6 +16,12 @@ class WindowCapture:
         self.screen = QApplication.primaryScreen()
 
     def window_capture(self):
+        # map name
+        # img = self.screen.grabWindow(self.hwnd, 45, 56, 250, 15).toImage()
+        # blood
+        # img = self.screen.grabWindow(self.hwnd, 610, 723, 170, 1).toImage()
+        # blue
+        # img = self.screen.grabWindow(self.hwnd, 610, 743, 170, 10).toImage()
         img = self.screen.grabWindow(self.hwnd).toImage()
         img.save("screenshot.jpg")
         return img
