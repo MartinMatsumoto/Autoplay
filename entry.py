@@ -11,9 +11,9 @@ import os, time
 sleep_time = 1
 loop = True
 
-window_capture = WindowCapture("MapleStory")
+window_capture = WindowCapture("钉钉")
 blood_detect = BloodDetect()
-# panel = Panel()
+panel = Panel()
 map_detect = Map()
 
 while loop:
