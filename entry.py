@@ -6,6 +6,7 @@ from window.window_shoot import WindowCapture
 from blood.blood_detect import BloodDetect
 from map.map_detect import Map
 from panel.panel import Panel
+from map.xml_parser import XmlParser
 import os, time
 
 sleep_time = 1
@@ -13,6 +14,8 @@ loop = True
 
 window_capture = WindowCapture("钉钉")
 blood_detect = BloodDetect()
+xml_parser = XmlParser()
+xml_parser.parse_file("test.html")
 panel = Panel()
 map_detect = Map()
 
