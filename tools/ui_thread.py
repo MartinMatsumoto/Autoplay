@@ -5,8 +5,8 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from blood.blood_detect import BloodDetect
 from map.map_detect import MapDetect
 from map.xml_parser import XmlParser
-from window.window_shoot import WindowCapture
 from panel.panel_map import MapInfo
+from window.window_shoot import WindowCapture
 
 
 class UIThread(QThread):
@@ -17,6 +17,7 @@ class UIThread(QThread):
     curr_map_code = 0
 
     reload_map = pyqtSignal(MapInfo)
+    show_blood = pyqtSignal(int, int)
 
     def __init__(self, screen):
         super(UIThread, self).__init__()
@@ -34,7 +35,8 @@ class UIThread(QThread):
             img = window_capture.window_capture()
             self.detect_map_change(img)
             if not self.map_changing:
-                self.blood_detect.detect(img)
+                blood, blue = self.blood_detect.detect(img)
+                self.blood_show(blood, blue)
             time.sleep(self.sleep_time)
 
     def detect_map_change(self, img):
@@ -53,3 +55,6 @@ class UIThread(QThread):
                 # 发送添加信号
                 self.reload_map.emit(curr_map)
                 self.curr_map_code = map_code
+
+    def blood_show(self, blood, blue):
+        self.show_blood.emit(blood, blue)

@@ -19,7 +19,7 @@ class MapDetect:
                 qc = img.pixelColor(start, end)
                 if qc.name() == '#ffffff':
                     self.map_white += 1
-        print(self.map_white)
+        # print(self.map_white)
         if self.map_white == 0:
             self.map_name = ''
             self.map_code = 0

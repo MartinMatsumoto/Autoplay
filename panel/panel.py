@@ -1,6 +1,6 @@
 # 这里我们提供必要的引用。基本控件位于pyqt5.qtwidgets模块中。
 from PyQt5.QtWidgets import QTabWidget
-
+from PyQt5.QtWidgets import QApplication
 from panel.panel_main import PanelMain
 from panel.panel_map import PanelMap, MapInfo
 from tools.ui_thread import UIThread
@@ -34,7 +34,11 @@ class Panel(QTabWidget):
         self.ui_thread.start()
         # 绑定增加控件函数
         self.ui_thread.reload_map.connect(self.map_nodes_receive)
+        self.ui_thread.show_blood.connect(self.blood_receive)
 
     def map_nodes_receive(self, curr_map: MapInfo):
-        self.tab_map.curr_map = curr_map
+        self.tab_map.reload_map(curr_map)
         self.tab_main.set_map_name(curr_map.map_name)
+
+    def blood_receive(self, blood: int, blue: int):
+        self.tab_main.set_blood(blood, blue)

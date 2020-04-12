@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QTabWidget, QCheckBox, QApplication, QGridLayout
-from PyQt5.QtGui import QPainter, QPen
+from PyQt5.QtGui import QPainter, QPen, QPaintEvent, QColor
 from PyQt5.QtCore import Qt
 
 
@@ -9,10 +9,16 @@ class PanelMap(QWidget):
     def __init__(self):
         super().__init__()
         self.curr_map = MapInfo()
-        self.pen = QPen(Qt.black, 2, Qt.SolidLine)
+        self.pen = QPen(Qt.black, 1, Qt.SolidLine)
 
-    def paintEvent(self, e):
-        qp = QPainter()
+    def reload_map(self, curr_map):
+        self.curr_map = curr_map
+        self.update()
+
+    def paintEvent(self, e: QPaintEvent):
+        qp = QPainter(self)
+        # 反锯齿
+        qp.setRenderHint(QPainter.Antialiasing)
         qp.begin(self)
         self.draw_lines(qp)
         qp.end()
@@ -23,14 +29,23 @@ class PanelMap(QWidget):
         # pen.setStyle(Qt.DotLine)
         # pen.setStyle(Qt.DashDotDotLine)
         qp.setPen(self.pen)
+
+        i = 0
         for node in self.curr_map.map_nodes:
+            # if i % 2 == 0:
+            #     self.pen.setColor(QColor(255, 182, 193))
+            # else:
+            #     self.pen.setColor(Qt.blue)
+
             try:
-                qp.drawLine(node.x1 / 10 + self.curr_map.center_x / 10,
-                            node.y1 / 10 + self.curr_map.center_y / 10,
-                            node.x2 / 10 + self.curr_map.center_x / 10,
-                            node.y2 / 10 + self.curr_map.center_y / 10)
+                qp.drawLine(node.x1 / 3 + self.curr_map.center_x / 3,
+                            node.y1 / 3 + self.curr_map.center_y / 3,
+                            node.x2 / 3 + self.curr_map.center_x / 3,
+                            node.y2 / 3 + self.curr_map.center_y / 3)
+                qp.drawText(node.x2 / 3, node.y2 / 3, str(i))
             except Exception as e:
                 print(e)
+            i += 1
         qp.end()
 
 
