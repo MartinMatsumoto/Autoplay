@@ -5,6 +5,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from blood.blood_detect import BloodDetect
 from map.map_detect import MapDetect
 from map.xml_parser import XmlParser
+from map.mini_map import MiniMap
 from panel.panel_map import MapInfo
 from window.window_shoot import WindowCapture
 
@@ -24,6 +25,7 @@ class UIThread(QThread):
         self.screen = screen
         self.blood_detect = BloodDetect()
         self.map_detect = MapDetect()
+        self.mini_map = MiniMap()
         self.xml_parser = XmlParser()
 
     def run(self):
@@ -33,11 +35,13 @@ class UIThread(QThread):
         while self.loop:
             # 获取软件图片
             img = window_capture.window_capture()
+            self.mini_map.detect(img)
             self.detect_map_change(img)
             if not self.map_changing:
                 blood, blue = self.blood_detect.detect(img)
                 self.blood_show(blood, blue)
             time.sleep(self.sleep_time)
+            # self.loop = False
 
     def detect_map_change(self, img):
         map_code, map_name = self.map_detect.detect(img)

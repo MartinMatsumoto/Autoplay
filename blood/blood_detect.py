@@ -2,54 +2,57 @@ class BloodDetect:
     blood_point_y = 727
     blue_point_y = 743
 
-    point_x_1 = 648
-    point_x_2 = 680
-    point_x_3 = 712
-    point_x_4 = 744
-    point_x_5 = 776
+    point_x_1 = 615
+    point_x_2 = 649
+    point_x_3 = 683
+    point_x_4 = 717
+    point_x_5 = 751
 
-    blood_1 = '#fa4ba4'
-    blood_2 = '#fb51a8'
-    blood_3 = '#fb5bad'
-    blood_4 = '#fb69b7'
-    blood_5 = '#fc79c2'
-
-    blue_1 = '#15e4f4'
-    blue_2 = '#2de7f5'
-    blue_3 = '#b1f5ff'
-    blue_4 = '#56ebf8'
-    blue_5 = '#27e6f5'
+    gray_blood: int = 7960189
 
     def __init__(self):
         print("初始化血量监测")
-        self.curr_blood = 5
-        self.curr_blue = 5
+        self.curr_blood = 0
+        self.curr_blue = 0
+
+    def get_pixel_value(self, img, x, y):
+        return int(img.pixelColor(x, y).name().replace("#", ""), 16) != self.gray_blood
 
     def detect(self, img):
-        if img.pixelColor(self.point_x_5, self.blood_point_y).name() == self.blood_5:
-            self.curr_blood = 5
-        elif img.pixelColor(self.point_x_4, self.blood_point_y).name() == self.blood_4:
-            self.curr_blood = 4
-        elif img.pixelColor(self.point_x_3, self.blood_point_y).name() == self.blood_3:
-            self.curr_blood = 3
-        elif img.pixelColor(self.point_x_2, self.blood_point_y).name() == self.blood_2:
-            self.curr_blood = 2
-        elif img.pixelColor(self.point_x_1, self.blood_point_y).name() == self.blood_1:
-            self.curr_blood = 1
-        else:
-            self.curr_blood = 0
+        # for x in range(610, 780):
+        # print(img.pixelColor(x, self.blood_point_y).name().replace("#",""))
+        # print(int(img.pixelColor(x, self.blood_point_y).name().replace("#", ""), 16))
+        # for x in range(610, 780):
+        # print(img.pixelColor(x, self.blue_point_y).name().replace("#", ""))
+        # print(int(img.pixelColor(x, self.blue_point_y).name().replace("#", ""), 16))
 
-        if img.pixelColor(self.point_x_5, self.blue_point_y).name() == self.blue_5:
-            self.curr_blue = 5
-        elif img.pixelColor(self.point_x_4, self.blue_point_y).name() == self.blue_4:
-            self.curr_blue = 4
-        elif img.pixelColor(self.point_x_3, self.blue_point_y).name() == self.blue_3:
-            self.curr_blue = 3
-        elif img.pixelColor(self.point_x_2, self.blue_point_y).name() == self.blue_2:
-            self.curr_blue = 2
-        elif img.pixelColor(self.point_x_1, self.blue_point_y).name() == self.blue_1:
-            self.curr_blue = 1
-        else:
-            self.curr_blue = 0
+        try:
+            if self.get_pixel_value(img, self.point_x_5, self.blood_point_y):
+                self.curr_blood = 5
+            elif self.get_pixel_value(img, self.point_x_4, self.blood_point_y):
+                self.curr_blood = 4
+            elif self.get_pixel_value(img, self.point_x_3, self.blood_point_y):
+                self.curr_blood = 3
+            elif self.get_pixel_value(img, self.point_x_2, self.blood_point_y):
+                self.curr_blood = 2
+            elif self.get_pixel_value(img, self.point_x_1, self.blood_point_y):
+                self.curr_blood = 1
+            else:
+                self.curr_blood = 0
+
+            if self.get_pixel_value(img, self.point_x_5, self.blue_point_y):
+                self.curr_blue = 5
+            elif self.get_pixel_value(img, self.point_x_4, self.blue_point_y):
+                self.curr_blue = 4
+            elif self.get_pixel_value(img, self.point_x_3, self.blue_point_y):
+                self.curr_blue = 3
+            elif self.get_pixel_value(img, self.point_x_2, self.blue_point_y):
+                self.curr_blue = 2
+            elif self.get_pixel_value(img, self.point_x_1, self.blue_point_y):
+                self.curr_blue = 1
+            else:
+                self.curr_blue = 0
+        except Exception as e:
+            print(e)
 
         return self.curr_blood, self.curr_blue

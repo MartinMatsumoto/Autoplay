@@ -21,6 +21,9 @@ class WindowCapture:
         # blue
         # img = self.screen.grabWindow(self.hwnd, 610, 743, 170, 1).toImage()
         # img.save("screenshot.jpg")
-        img = self.screen.grabWindow(self.hwnd).toImage()
+        # mini map
+        img = self.screen.grabWindow(self.hwnd, 9, 84, 365, 83).toImage()
         img.save("screenshot.jpg")
+        img = self.screen.grabWindow(self.hwnd).toImage()
+        # img.save("screenshot.jpg")
         return img
