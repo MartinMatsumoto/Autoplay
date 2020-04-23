@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QTabWidget
 from PyQt5.QtWidgets import QApplication
 from panel.panel_main import PanelMain
 from panel.panel_map import PanelMap, MapInfo
+from panel.panel_cut_rect import PanelCutRect
 from tools.ui_thread import UIThread
 
 
@@ -13,6 +14,7 @@ class Panel(QTabWidget):
         self.screen = screen
         self.tab_main = PanelMain()
         self.tab_map = PanelMap()
+        # self.panel_cut_rect = PanelCutRect()
         self.init_widget()
         self.ui_thread = UIThread(screen)
         self.init_worker_thread()
@@ -23,6 +25,7 @@ class Panel(QTabWidget):
         # 创建2个选项卡小控件窗口
         self.addTab(self.tab_main, "设置")
         self.addTab(self.tab_map, "地图")
+        # self.addTab(self.panel_cut_rect, "截图工具")
         # resize()方法调整窗口的大小。这离是250px宽150px高
         # w.resize(250, 150)
         # move()方法移动窗口在屏幕上的位置到x = 300，y = 300坐标。

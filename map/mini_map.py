@@ -1,7 +1,19 @@
+class MiniMapRect:
+    left: int
+    top: int
+    right: int
+    bottom: int
+
+    def __init__(self, left, top):
+        self.left = left
+        self.top = top
+
+
 class MiniMap:
     def __init__(self):
         # 从上往下数多少个开始遍历
         self.offset: int = 60
+        self.offset_right: int = 90
 
         self.left: int = 9
         self.top: int = 84
@@ -18,6 +30,7 @@ class MiniMap:
         all_white = False
         max_width: int = img.width()
         max_height: int = img.height()
+        mini_map_rect: MiniMapRect = MiniMapRect(self.left, self.top)
 
         # 找下边框
         while all_white is False:
@@ -38,24 +51,31 @@ class MiniMap:
         if all_white is False:
             print("没找到minimap底部")
 
+        arr = []
         # 找右边框
         all_gray = False
+        i = 0
         while all_gray is False:
             self.right += 1
+            i += 1
             gray = True
             # x 为从横60开始 y在60-70像素之间
-            for y in range(self.offset, self.offset + self.range):
+            for y in range(self.offset_right, self.offset_right + self.range):
+                arr.append(img.pixelColor(self.right, y).name())
                 if img.pixelColor(self.right, y).name() != self.gray:
                     gray = False
                     break
             if gray:
                 all_gray = True
+            arr = []
             if max_width <= self.right:
                 break
         if all_gray is False:
             print("没找到minimap右边")
 
-        print("bottom=" + str(self.bottom))
-        print("right=" + str(self.right))
+        mini_map_rect.bottom = self.bottom
+        mini_map_rect.right = self.right
+
         self.bottom: int = self.top + self.offset
         self.right: int = self.left + self.offset
+        return mini_map_rect
