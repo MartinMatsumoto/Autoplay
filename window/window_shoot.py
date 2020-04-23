@@ -7,7 +7,6 @@ import sys
 class WindowCapture:
 
     def __init__(self, title_name, screen):
-        print("初始化窗口句柄")
         # 获取句柄
         self.hwnd = win32gui.FindWindow(0, title_name)
         self.screen = screen
@@ -22,8 +21,8 @@ class WindowCapture:
         # img = self.screen.grabWindow(self.hwnd, 610, 743, 170, 1).toImage()
         # img.save("screenshot.jpg")
         # mini map
-        img = self.screen.grabWindow(self.hwnd, 9, 84, 365, 83).toImage()
-        img.save("screenshot.jpg")
+        # img = self.screen.grabWindow(self.hwnd, 9, 84, 365, 83).toImage()
+        # img.save("screenshot.jpg")
         img = self.screen.grabWindow(self.hwnd).toImage()
         # img.save("screenshot.jpg")
         return img
