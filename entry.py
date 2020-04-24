@@ -1,7 +1,7 @@
 # pip install opencv-python -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 # pip install PyQt5 -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 # pip install pypiwin32 -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
-
+# pip3 install pyautogui -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 
 from panel.panel import Panel
 from PyQt5.QtWidgets import QApplication
