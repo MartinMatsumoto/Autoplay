@@ -21,6 +21,9 @@ class PanelCutRect(QWidget):
         self.width_edit = QLineEdit(self)
         self.height_edit = QLineEdit(self)
         self.total_edit = QLineEdit(self)
+        self.p1_edit = QLineEdit(self)
+        self.p2_edit = QLineEdit(self)
+        self.p3_edit = QLineEdit(self)
 
         self.init_widget()
 
@@ -55,13 +58,28 @@ class PanelCutRect(QWidget):
         self.height_edit.setText(str(self.default_num))
 
         total_label = QLabel(self)
-        total_label.setText("total：")
+        total_label.setText("p1：")
         total_label.move(10, 175)
-        self.total_edit.move(70, 170)
+        self.p1_edit.move(70, 170)
+
+        total_label = QLabel(self)
+        total_label.setText("p2：")
+        total_label.move(10, 215)
+        self.p2_edit.move(70, 210)
+
+        total_label = QLabel(self)
+        total_label.setText("p3：")
+        total_label.move(10, 255)
+        self.p3_edit.move(70, 250)
+
+        total_label = QLabel(self)
+        total_label.setText("total：")
+        total_label.move(10, 295)
+        self.total_edit.move(70, 290)
 
         shoot = QPushButton('截图', self)
         shoot.setCheckable(True)
-        shoot.move(10, 210)
+        shoot.move(10, 330)
         shoot.clicked[bool].connect(self.cut_rect)
 
     def cut_rect(self, b):
@@ -69,6 +87,9 @@ class PanelCutRect(QWidget):
         self.y = int(self.y_edit.text())
         self.width = int(self.width_edit.text())
         self.height = int(self.height_edit.text())
+        self.p1_edit.setText(str(self.img.pixel(self.x, self.y)))
+        self.p2_edit.setText(str(self.img.pixel(self.x + self.width / 2, self.y + self.height / 2)))
+        self.p3_edit.setText(str(self.img.pixel(self.x + self.width, self.y + self.height)))
         self.total_edit.setText(str(self.calculate_color(self.x, self.y, self.width, self.height)))
         self.update()
 
@@ -85,7 +106,7 @@ class PanelCutRect(QWidget):
         # 反锯齿
         qp.setRenderHint(QPainter.Antialiasing)
         qp.begin(self)
-        target = QRect(10, 250, self.width, self.height)
+        target = QRect(10, 370, self.width, self.height)
         source = QRect(self.x, self.y, self.width, self.height)
         # 将源图像文件中(0.0, 0.0, 70.0, 40.0)位置的图像画到目标绘图设备中的(10.0, 20.0, 80.0, 60.0)位置上，大小自适应
         qp.drawImage(target, self.img, source)

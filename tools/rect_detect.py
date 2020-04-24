@@ -5,10 +5,25 @@ from tools.color_utils import ColorUtils
 class Rect:
     width: int
     height: int
+    # 特征 所有点加起来的值
+    feature: int
 
-    def __init__(self, width, height):
+    # 特征点1 坐标0，0的颜色
+    feature_1: int
+
+    # 特征点2 坐标中心点的颜色
+    offset_x2: int
+    offset_y2: int
+    feature_2: int
+
+    # 特征点3 坐标最右下角点的颜色
+    # 3个特征点都符合的情况下再计算总值
+    feature_3: int
+
+    def __init__(self, width, height, feature):
         self.width = width
         self.height = height
+        self.feature = feature
 
 
 # 方形范围
@@ -46,7 +61,12 @@ class RectDetect:
             end_y = img.height()
         for y in range(start_y, end_y):
             for x in range(start_x, end_x):
-                print(self.calculate_color(img, start_x, end_x, rect))
+                if img.pixel(x, y) == rect.feature_1 \
+                        and img.pixel(x + rect.offset_x2, y + rect.offset_y2) == rect.feature_2 \
+                        and img.pixel(x + rect.width, y + rect.height) == rect.feature_3 \
+                        and self.calculate_color(img, x, y, rect) == rect.feature:
+                    return x, y
+        print("找完了")
 
     # 相加区域所有颜色
     def calculate_color(self, img, start_x, start_y, rect: Rect):

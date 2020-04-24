@@ -9,7 +9,7 @@ app = QApplication(sys.argv)
 # 根据窗口句柄获取窗口的设备上下文DC（Divice Context）
 
 screen = QApplication.primaryScreen()
-window_capture = WindowCapture("MapleStory", screen)
+window_capture = WindowCapture("钉钉", screen)
 img = window_capture.window_capture()
 img.save("../screenshot.jpg")
 panel_cut_rect = PanelCutRect(img)
